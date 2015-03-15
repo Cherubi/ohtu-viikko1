@@ -91,7 +91,7 @@ public class VarastoTest {
     @Test
     public void eiVoiOttaaNegatiivista() {
         varasto.lisaaVarastoon(4);
-        assertEquals(0, varasto.otaVarastosta(-2), vertailuTarkkuus);
+        assertEquals(-2, varasto.otaVarastosta(-2), vertailuTarkkuus);
     }
     
     @Test
