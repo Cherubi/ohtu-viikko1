@@ -64,6 +64,71 @@ public class VarastoTest {
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
+    
+    @Test
+    public void liikaaLisaaminenEiYlitayta() {
+        varasto.lisaaVarastoon(12);
+        
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiVoiOttaaEnempaaKuinOn() {
+        varasto.lisaaVarastoon(8);
+        
+        assertEquals(8, varasto.otaVarastosta(10), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiVoiLisataNegatiivista() {
+        varasto.lisaaVarastoon(4);
+        assertEquals(4, varasto.getSaldo(), vertailuTarkkuus);
+        
+        varasto.lisaaVarastoon(-2);
+        assertEquals(4, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiVoiOttaaNegatiivista() {
+        varasto.lisaaVarastoon(4);
+        assertEquals(0, varasto.otaVarastosta(-2), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiVoiTehdaNegatiivisenKokoistaVarastoa() {
+        Varasto varastoNeg = new Varasto(-2, 0);
+        assertEquals(0, varastoNeg.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkuSaldollisenVarastonTilavuusAnnettu() {
+        Varasto varastoAlku = new Varasto(20, 0);
+        assertEquals(20, varastoAlku.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkuSaldollisenVarastonTilavuusEiNegatiivinen() {
+        Varasto varastoAlku = new Varasto(-10, 0);
+        assertEquals(0, varastoAlku.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void annettuAlkuSaldoEiVoiOllaNegatiivinen() {
+        Varasto varastoNeg = new Varasto(10, -2);
+        assertEquals(0, varastoNeg.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void annettuAlkuSaldoAsettuuAlkuSaldoksi() {
+        Varasto varastoAlku = new Varasto(10, 4);
+        assertEquals(4, varastoAlku.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void annettuAlkuSaldoEiVoiOllaLiianIso() {
+        Varasto varastoTaynna = new Varasto(10, 14);
+        assertEquals(10, varastoTaynna.getSaldo(), vertailuTarkkuus);
+    }
 
     @Test
     public void konstr() {
